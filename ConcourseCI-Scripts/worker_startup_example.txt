@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. /lib/lsb/init-functions
+
+cd /opt/concourse/bin/
+
+./concourse worker \
+  --name ci_worker01 \
+  --bind-ip 0.0.0.0 \
+  --bind-port 7777 \
+  --work-dir /opt/concourse/worker \
+  --tsa-host 127.0.0.1 \
+  --tsa-port 2222 \
+  --tsa-public-key /opt/concourse/.ssh/id_web_rsa.pub \
+  --tsa-worker-private-key /opt/concourse/.ssh/id_worker_rsa &>/var/log/concourse/concourse_worker.log &

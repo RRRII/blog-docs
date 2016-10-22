@@ -1,0 +1,27 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: concourseci web and worker
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: concourseci web and worker service
+# Description: This file starts and stops concourseci web server and worker server
+#
+### END INIT INFO
+
+CONCOURSE_DIR=/opt/concourse/
+
+case "$1" in
+ start)
+   su concourse -c $CONCOURSE_DIR/bin/web_startup.sh
+   sleep 10
+   $CONCOURSE_DIR/bin/worker_startup.sh
+   ;;
+ stop)
+   $CONCOURSE_DIR/bin/concourse_shutdown.sh
+   sleep 10
+   ;;
+ *)
+   echo "Usage: concourse-service {start|stop}" >&2
+   exit 3
+   ;;
+esac

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+. /lib/lsb/init-functions
+
+cd /opt/concourse/bin/
+
+./concourse web \
+  --basic-auth-username concourse-admin \
+  --basic-auth-password password \
+  --session-signing-key /opt/concourse/.ssh/id_session_rsa \
+  --external-url http://concourse-hostname \
+  --bind-ip 0.0.0.0 \
+  --bind-port 8080 \
+  --tsa-bind-ip 0.0.0.0 \
+  --tsa-bind-port 2222 \
+  --tsa-host-key /opt/concourse/.ssh/id_web_rsa \
+  --tsa-authorized-keys /opt/concourse/.ssh/authorized_worker_keys \
+  --postgres-data-source postgres://username:password@127.0.0.1/concourse &>/var/log/concourse/concourse_web.log &
